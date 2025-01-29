@@ -53,7 +53,7 @@ def convert_csv(input_file, output_file):
                 "No" if row["rx only"] == "0" else "Yes",
                 "No",  # Zone Skip non presente
                 "No",  # All Skip non presente
-                row["tx time out"].strip(),
+                "180",
                 "Off" if row["vox"] == "0" else "On",
                 "No",  # No Beep non presente
                 "No",  # No Eco non presente
@@ -68,7 +68,7 @@ def convert_csv(input_file, output_file):
             print(f"  Colour Code: {row['colour code']}")
             print(f"  Repeater Slot: {row['repeater slot']}")
             print(f"  Contact: {contacts_dict.get(int(row["contact"].strip()), 0)}")
-            print(f"  TX Time Out: {row['tx time out']}")
+            print("  TX Time Out: 180")
             print(f"  Squelch Mode: {row['squelch mode']}")
             print(f"  RX Only: {row['rx only']}")
             print(f"  VOX: {row['vox']}")

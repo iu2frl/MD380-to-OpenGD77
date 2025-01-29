@@ -16,6 +16,10 @@ This repo includes script to convert:
 - Channels list
   - The channels list converter needs the original contacts list to convert the contacts IDs (MD380 format) to names (OpenGD77 format)
 
+## Known issues
+
+- The channels converter cannot convert the TX and RX CTCSS/DCS codes, I have not figured out the MD380 encoding yet.
+
 ## Input Format
 
 The input CSV file must have a header with the following fields:
