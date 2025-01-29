@@ -28,6 +28,8 @@ The input CSV file must have a header with the following fields:
 
 Each row represents a radio channel with its corresponding parameters.
 
+The file was exported by using the `DMR Codeplug Editor v1.1.21 by G6AMU` software, browsing to the `Channels` tab, and clicking on the `Export` button.
+
 ## Output Format
 
 The resulting CSV file will have the following header:
@@ -37,6 +39,11 @@ Channel Number,Channel Name,Channel Type,Rx Frequency,Tx Frequency,Bandwidth (kH
 ```
 
 Data is reformatted, and some columns have predefined or calculated values.
+
+The file is imported into the `OpenGD77 CPS (Version R2024.12.20.01)` software by browsing to the `File` menu, selecting `CSV`, then `Open` and choosing the folder containing the converted CSV file.
+
+> [!TIP]
+> The output file should be called `Channels.csv` for the OpenGD77 CPS to recognize it.
 
 ## Requirements
 
