@@ -1,11 +1,26 @@
 import csv
 import sys
 
+contacts_dict = dict()
+
+def load_contacts(input_file):
+    with open(input_file, newline='', encoding='utf-8') as infile:
+        contact_id = 1
+        for line in infile:
+            line = line.replace('"', '').strip()
+            split_line = line.split(',')
+            if not split_line:
+                continue
+            contact_name = split_line[1].strip()
+            contacts_dict[contact_id] = contact_name
+            print(f"Loaded contact {contact_id}: {contact_name}")
+            contact_id += 1
+
 def convert_csv(input_file, output_file):
     with open(input_file, newline='', encoding='utf-8') as infile, open(output_file, 'w', newline='', encoding='utf-8') as outfile:
         reader = csv.DictReader(infile)
         writer = csv.writer(outfile)
-        
+
         # Scrittura intestazione del nuovo formato
         writer.writerow([
             "Channel Number", "Channel Name", "Channel Type", "Rx Frequency", "Tx Frequency",
@@ -14,7 +29,7 @@ def convert_csv(input_file, output_file):
             "Zone Skip", "All Skip", "TOT", "VOX", "No Beep", "No Eco", "APRS",
             "Latitude", "Longitude", "Use Location"
         ])
-        
+
         channel_number = 1
         for row in reader:
             writer.writerow([
@@ -26,7 +41,7 @@ def convert_csv(input_file, output_file):
                 "12.5",  # Valore fisso della banda
                 row["colour code"].strip(),
                 row["repeater slot"].strip(),
-                row["contact"].strip(),
+                contacts_dict.get(int(row["contact"].strip(), 0)),
                 "",  # TG List non presente nel file originale
                 "",  # DMR ID non presente nel file originale
                 "",  # TS1_TA_Tx non presente nel file originale
@@ -47,10 +62,26 @@ def convert_csv(input_file, output_file):
                 "0.008",  # Longitudine di default
                 "No"  # Use Location
             ])
+            print(f"Converted channel {channel_number}: {row['name']}")
+            print(f"  Rx Freq: {int(row['rx freq']) / 1e5:.5f}")
+            print(f"  Tx Freq: {int(row['tx freq']) / 1e5:.5f}")
+            print(f"  Colour Code: {row['colour code']}")
+            print(f"  Repeater Slot: {row['repeater slot']}")
+            print(f"  Contact: {contacts_dict.get(int(row["contact"].strip()), 0)}")
+            print(f"  TX Time Out: {row['tx time out']}")
+            print(f"  Squelch Mode: {row['squelch mode']}")
+            print(f"  RX Only: {row['rx only']}")
+            print(f"  VOX: {row['vox']}")
             channel_number += 1
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python script.py input.csv output.csv")
+    if 3 < len(sys.argv) < 4:
+        print("Usage: python script.py input.csv output.csv [contacts.csv]")
         sys.exit(1)
+
+    if len(sys.argv) == 4:
+        load_contacts(sys.argv[3])
+    else:
+        print("Contacts file not provided, contacts for DMR channels will be empty")
+
     convert_csv(sys.argv[1], sys.argv[2])

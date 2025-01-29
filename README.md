@@ -8,12 +8,20 @@ Both softwares are in the `CPS_Softwares` folder.
 
 This helped me save a lot of time when I had to convert a large number of radio channels from one format to another.
 
+## Features
+
+This repo includes script to convert:
+
+- Contacts list
+- Channels list
+  - The channels list converter needs the original contacts list to convert the contacts IDs (MD380 format) to names (OpenGD77 format)
+
 ## Usage
 
 Run the script from the command line, specifying the input file and the output file:
 
 ```sh
-python channels_converter.py input.csv output.csv
+python script.py input.csv output.csv
 ```
 
 If exactly two arguments are not provided, the script will display an error message and terminate.
@@ -54,5 +62,5 @@ The file is imported into the `OpenGD77 CPS (Version R2024.12.20.01)` software b
 Example of converting a file:
 
 ```sh
-python channels_converter.py original_channels.csv converted_channels.csv
+python script.py original_channels.csv converted_channels.csv
 ```
